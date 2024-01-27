@@ -19,9 +19,11 @@ app.use(fileUpload());
 
 const permitRouter = require("./routes/permit");
 const roleRouter = require("./routes/role");
+const userRouter = require("./routes/user");
 
 app.use("/permit", permitRouter);
 app.use("/role", roleRouter);
+app.use("/user", userRouter);
 
 app.use((err, req, res, next) => {
   err.status = err.status || 500;
@@ -30,7 +32,7 @@ app.use((err, req, res, next) => {
 
 const defaultData = async () => {
   const migrator = require("./migrations/migrator");
-  await migrator.migrate();
+  // await migrator.migrate();
   // await migrator.backup();
 };
 

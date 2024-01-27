@@ -1,9 +1,18 @@
 const Joi = require("joi");
+const { register } = require("../controllers/user");
 
 module.exports = {
   PermitSchema: {
     add: Joi.object({
       name: Joi.string().required(),
+    }),
+  },
+  UserSchema: {
+    register: Joi.object({
+      name: Joi.string().min(5).required(),
+      email: Joi.string().required(),
+      phone: Joi.string().min(7).max(11).required(),
+      password: Joi.string().min(6).required(),
     }),
   },
   RoleSchema: {
