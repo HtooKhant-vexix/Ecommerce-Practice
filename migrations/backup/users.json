@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "65b4c11ed0f3d782bc0d5d0f",
+    "name": "Htoo Khant",
+    "email": "htookhant@gmail.com",
+    "phone": "09955209427",
+    "password": "$2a$10$cd7CMzOiyWrOwS6mnRe9WekGYiCIpT8SS9iHT1uQ8Adbld2J8obsu",
+    "roles": [],
+    "permits": [],
+    "created": "2024-01-27T08:38:54.116Z",
+    "__v": 0
+  },
+  {
+    "_id": "65b4c11ed0f3d782bc0d5d10",
+    "name": "Vexix",
+    "email": "vexix@gmail.com",
+    "phone": "09784275211",
+    "password": "$2a$10$m6YyddULz97d724dqUrO.OZdZeyVInVRfaD07y2Iox3izdXMEHjaq",
+    "roles": [],
+    "permits": [],
+    "created": "2024-01-27T08:38:54.116Z",
+    "__v": 0
+  }
+]
