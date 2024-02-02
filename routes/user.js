@@ -1,12 +1,24 @@
 const router = require("express").Router();
 const controller = require("../controllers/user");
 const { UserSchema } = require("../utils/Schema");
-const { validateBody } = require("../utils/validator");
+const {
+  validateBody,
+  validateToken,
+  validateRole,
+} = require("../utils/validator");
 
 router.post(
   "/register",
   validateBody(UserSchema.register),
   controller.register
+);
+router.post("/", validateBody(UserSchema.login), controller.login);
+router.post(
+  "/add/role",
+  validateToken(),
+  validateRole("Owner"),
+  validateBody(UserSchema.addRole),
+  controller.addRole
 );
 router.get("/", controller.all);
 

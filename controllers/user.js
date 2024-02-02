@@ -1,5 +1,6 @@
 const { findById } = require("../models/user");
 const DB = require("../models/user");
+const roleDB = require("../models/role");
 const Helper = require("../utils/helper");
 
 const register = async (req, res) => {
@@ -11,9 +12,30 @@ const register = async (req, res) => {
   if (dbPhoneUser) {
     next(new Error("Phone is already taken"));
   }
-  const data = new DB(req.body);
+  let data = new DB(req.body);
+  data.password = Helper.encode(req.body.password);
   const result = await data.save();
   Helper.fMsg(res, "User added", result);
+};
+
+const login = async (req, res, next) => {
+  const PhoneUser = await DB.findOne({ phone: req.body.phone })
+    .populate("roles permits")
+    .select("-__v");
+  // console.log(req.body.password);
+  if (PhoneUser) {
+    if (Helper.compare(req.body.password, PhoneUser.password)) {
+      let user = PhoneUser.toObject();
+      delete user.password;
+      user.token = Helper.makeToken(user);
+      Helper.set(user._id, user);
+      Helper.fMsg(res, "Login Successful", user);
+    } else {
+      next(new Error("Password is wrong"));
+    }
+  } else {
+    next(new Error("Credential error"));
+  }
 };
 
 const all = async (req, res) => {
@@ -37,10 +59,21 @@ const drop = async (req, res) => {
   res.send({ con: true, msg: "user Deleted!", result });
 };
 
+const addRole = async (req, res, next) => {
+  const dbUser = await DB.findById(req.body.userId);
+  const dbRole = await roleDB.findById(req.body.roleId);
+
+  await DB.findByIdAndUpdate(dbUser._id, { $push: { roles: dbRole._id } });
+  let user = await DB.findById(dbUser._id);
+  Helper.fMsg()
+};
+
 module.exports = {
   register,
   all,
   get,
+  login,
   patch,
   drop,
+  addRole,
 };

@@ -6,11 +6,11 @@ mongoose = require("mongoose");
 fileUpload = require("express-fileupload");
 
 mongoose.connect(
-  `mongodb://localhost:27017/${process.env.DB_NAME}`
-  // , {
+  // "mongodb://localhost:27017/3000"
+  "mongodb+srv://htoolay:abcde8.6@cluster0.10bidru.mongodb.net/test?retryWrites=true&w=majority"
+  // {
   //   useNewUrlParser: true,
   //   useUnifiedTopology: true,
-  //   useFindAndModify: false,
   // }
 );
 
@@ -32,11 +32,13 @@ app.use((err, req, res, next) => {
 
 const defaultData = async () => {
   const migrator = require("./migrations/migrator");
-  // await migrator.migrate();
+  await migrator.migrate();
   // await migrator.backup();
+  await migrator.rpMigrate();
+  await migrator.addOwnerRole();
 };
 
-defaultData();
+// defaultData();
 
 app.listen(
   process.env.PORT,
