@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { register } = require("../controllers/user");
+const { register, addPermit } = require("../controllers/user");
 
 module.exports = {
   PermitSchema: {
@@ -23,6 +23,14 @@ module.exports = {
         .regex(/^[0-9a-fA-f]{24}$/)
         .required(),
       roleId: Joi.string()
+        .regex(/^[0-9a-fA-f]{24}$/)
+        .required(),
+    }),
+    addPermit: Joi.object({
+      userId: Joi.string()
+        .regex(/^[0-9a-fA-f]{24}$/)
+        .required(),
+      permitId: Joi.string()
         .regex(/^[0-9a-fA-f]{24}$/)
         .required(),
     }),
